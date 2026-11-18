@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISU Job Portal - Isabela State University</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #022c22; color: white; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
+        
+        /* Header Style na may Logo sa Itaas */
+        header { text-align: center; padding: 40px 20px 20px 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* Istilo para sa Logo (Pwede mong palitan ng tunay na image file gamit ang <img src="...">) */
+        .isu-logo {
+            width: 80px;
+            height: 80px;
+            background: #ffffff;
+            color: #065f46;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 800;
+            border: 3px solid #fde047;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+
+        header h1 { font-size: 38px; font-weight: 800; color: #fde047; text-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-bottom: 8px; }
+        header p { font-size: 15px; color: #a7f3d0; letter-spacing: 1px; }
+
+        /* Main Center Layout */
+        main { max-width: 1000px; margin: 0 auto; padding: 20px; text-align: center; width: 100%; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        
+        .cards-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        @media (max-width: 768px) { .cards-container { grid-template-columns: 1fr; } }
+
+        /* Minimal & Clean Cards */
+        .portal-card { background: #065f46; border-radius: 24px; padding: 40px 30px; text-decoration: none; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        .portal-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); border-color: #34d399; }
+
+        .card-applicant { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+        .card-admin { background: linear-gradient(135deg, #d97706 0%, #b45309 100%); }
+
+        .card-icon { width: 80px; height: 80px; background: rgba(255,255,255,0.15); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 20px; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
+        .card-title { font-size: 26px; font-weight: bold; margin-bottom: 10px; }
+        .card-desc { font-size: 14px; color: #e2e8f0; opacity: 0.9; }
+
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #6ee7b7; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <!-- Kung mayroon kang picture file ng ISU logo (hal. isu-logo.png), maaari mong palitan ito ng: 
+             <img src="isu-logo.png" alt="ISU Logo" class="isu-logo"> -->
+       <img src="isu.png" alt="ISU Logo" class="isu-logo" style="object-fit: contain; background: white;">
+        
+        <h1>Isabela State University</h1>
+        <p>Please select your portal to continue...</p>
+    </header>
+
+    <main>
+        <div class="cards-container">
+            <!-- Card 1: Job Applicant (User) -->
+            <a href="jobs.html" class="portal-card card-applicant">
+                <div class="card-icon">📝</div>
+                <div class="card-title">Job Applicant</div>
+                <div class="card-desc">Apply and register online for vacancies</div>
+            </a>
+
+            <!-- Card 2: HR Administrator (Admin) -->
+            <a href="queue.html" class="portal-card card-admin">
+                <div class="card-icon">🛡️</div>
+                <div class="card-title">HR Administrator</div>
+                <div class="card-desc">Manage waiting list and call applicants</div>
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        Isabela State University &bull; Online Job Application & Queue System &copy; 2026
+    </footer>
+
+</body>
+</html>

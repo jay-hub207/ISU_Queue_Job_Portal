@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISU Job Portal - Vacant Positions</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
+</head>
+<body class="bg-emerald-50/40 text-slate-800 min-h-screen flex flex-col justify-between">
+
+    <!-- Header & Menu Bar -->
+    <header class="bg-emerald-800 text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-white text-emerald-900 p-2.5 rounded-2xl shadow-md font-extrabold flex items-center justify-center w-12 h-12 border-2 border-emerald-300">
+                    <span class="text-lg tracking-wider">ISU</span>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight">Isabela State University</h1>
+                    <p class="text-emerald-200 text-xs">Vacant Positions Board</p>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="bg-emerald-950/90 border-t border-emerald-700/40 px-6 py-3 text-xs font-semibold flex gap-8 shadow-inner">
+            <a href="index.html" class="hover:text-amber-300 transition flex items-center gap-2"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="jobs.html" class="text-amber-300 transition flex items-center gap-2"><i class="fa-solid fa-briefcase"></i> Vacant Jobs</a>
+            <a href="queue.html" class="hover:text-amber-300 transition flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Live Queue Dashboard</a>
+        </nav>
+    </header>
+
+    <!-- Job Cards Grid -->
+    <main class="max-w-7xl mx-auto px-6 py-10 w-full space-y-6">
+        <div class="bg-white rounded-3xl shadow-xl border border-emerald-100 p-8">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8 pb-4 border-b border-emerald-50">
+                <div>
+                    <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2.5">
+                        <i class="fa-solid fa-bullhorn text-emerald-700"></i> Available Job Openings at ISU
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-1">Pumili ng posisyon at i-click ang "Select & Apply" para magsimula sa aplikasyon.</p>
+                </div>
+                <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3.5 py-1.5 rounded-full shadow-sm border border-emerald-200">
+                    <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 mr-1 animate-pulse"></span> Hiring Active
+                </span>
+            </div>
+
+            <!-- Grid ng mga Trabaho na may Pulidong Shadows -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Card 1 -->
+                <div class="bg-white border-2 border-emerald-100/80 p-5 rounded-2xl shadow-md hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2.5 py-1 rounded-lg shadow-sm">Faculty / Academic</span>
+                        <h3 class="font-bold text-slate-800 text-base mt-3 group-hover:text-emerald-700 transition">Instructor I (IT / CS)</h3>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">College of Computing Studies. Teaches programming, systems, & networking subjects.</p>
+                    </div>
+                    <a href="apply.html?position=Instructor I (IT / CS)" class="mt-6 w-full bg-emerald-700 hover:bg-emerald-800 text-white text-center text-xs font-bold py-3 rounded-xl shadow-md shadow-emerald-700/20 transition block">
+                        Select & Apply <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white border-2 border-emerald-100/80 p-5 rounded-2xl shadow-md hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-blue-100 text-blue-800 px-2.5 py-1 rounded-lg shadow-sm">Library Services</span>
+                        <h3 class="font-bold text-slate-800 text-base mt-3 group-hover:text-emerald-700 transition">University Librarian I</h3>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">ISU Main & Campus Libraries. Manages digital archives and library resources.</p>
+                    </div>
+                    <a href="apply.html?position=University Librarian I" class="mt-6 w-full bg-emerald-700 hover:bg-emerald-800 text-white text-center text-xs font-bold py-3 rounded-xl shadow-md shadow-emerald-700/20 transition block">
+                        Select & Apply <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white border-2 border-emerald-100/80 p-5 rounded-2xl shadow-md hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-purple-100 text-purple-800 px-2.5 py-1 rounded-lg shadow-sm">Gen. Education</span>
+                        <h3 class="font-bold text-slate-800 text-base mt-3 group-hover:text-emerald-700 transition">Instructor I (Mathematics)</h3>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">Department of Arts and Sciences. Handles advanced algebra and calculus.</p>
+                    </div>
+                    <a href="apply.html?position=Instructor I (Mathematics)" class="mt-6 w-full bg-emerald-700 hover:bg-emerald-800 text-white text-center text-xs font-bold py-3 rounded-xl shadow-md shadow-emerald-700/20 transition block">
+                        Select & Apply <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white border-2 border-emerald-100/80 p-5 rounded-2xl shadow-md hover:shadow-xl hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between group">
+                    <div>
+                        <span class="text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-800 px-2.5 py-1 rounded-lg shadow-sm">Administrative</span>
+                        <h3 class="font-bold text-slate-800 text-base mt-3 group-hover:text-emerald-700 transition">Project / IT Assistant</h3>
+                        <p class="text-xs text-slate-500 mt-2 leading-relaxed">MIS / Campus Operations. Assists with network maintenance and IT support.</p>
+                    </div>
+                    <a href="apply.html?position=Project / IT Assistant" class="mt-6 w-full bg-emerald-700 hover:bg-emerald-800 text-white text-center text-xs font-bold py-3 rounded-xl shadow-md shadow-emerald-700/20 transition block">
+                        Select & Apply <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-emerald-100 py-5 text-center text-xs text-slate-500 shadow-inner">
+        &copy; 2026 Isabela State University (ISU) &bull; Job Board Portal.
+    </footer>
+</body>
+</html>

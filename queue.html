@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISU Job Portal - HR Queue Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #022c22; color: white; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
+        
+        header { text-align: center; padding: 30px 20px 20px 20px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .back-btn { position: absolute; left: 30px; top: 30px; background: rgba(255,255,255,0.1); color: #a7f3d0; padding: 8px 16px; border-radius: 10px; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s; }
+        .back-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+
+        .isu-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #fde047; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 12px; background: white; }
+        header h1 { font-size: 26px; font-weight: 800; color: #fde047; }
+        header p { font-size: 13px; color: #a7f3d0; }
+
+        main { max-width: 900px; margin: 20px auto; padding: 0 20px; width: 100%; flex: 1; display: flex; flex-direction: column; gap: 20px; }
+        
+        /* Spotlight Card */
+        .spotlight-card { background: linear-gradient(135deg, #065f46 0%, #047857 100%); color: white; border-radius: 24px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; gap: 20px; }
+        .spotlight-top { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.15); padding-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+        .spotlight-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        .ticket-badge { background: #022c22; color: #fde047; font-weight: bold; font-size: 22px; width: 65px; height: 65px; border-radius: 14px; display: flex; align-items: center; justify-content: center; border: 2px solid #fde047; }
+        .action-btns { display: flex; gap: 10px; }
+        
+        .btn-call { background: #fde047; color: #022c22; font-weight: bold; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-size: 13px; transition: 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-call:hover { background: #facc15; }
+        .btn-reset { background: rgba(244, 63, 94, 0.25); color: #fecdd3; border: 1px solid rgba(244,63,94,0.4); padding: 10px 14px; border-radius: 10px; cursor: pointer; }
+        .btn-reset:hover { background: rgba(244, 63, 94, 0.4); }
+        
+        /* Waiting List Box */
+        .waiting-box { background: #065f46; border-radius: 24px; padding: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); }
+        .waiting-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 12px; }
+        
+        .queue-item { display: flex; justify-content: space-between; align-items: center; background: #047857; border: 1px solid rgba(255,255,255,0.15); padding: 15px; border-radius: 12px; margin-bottom: 10px; transition: 0.2s; }
+        .queue-item:hover { background: #059669; }
+        
+        .queue-num { background: #022c22; color: #fde047; font-weight: bold; font-size: 13px; padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(253,224,71,0.3); }
+        .trash-btn { background: none; border: none; color: #fecdd3; cursor: pointer; padding: 6px; font-size: 14px; }
+        .trash-btn:hover { color: #f43f5e; }
+        
+        .hidden { display: none; }
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #6ee7b7; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-btn">Home</a>
+        <img src="isu.png" alt="ISU Logo" class="isu-logo" style="object-fit: contain; background: white;">
+        <h1>Isabela State University</h1>
+        <p>HR Admin Queue Dashboard</p>
+    </header>
+
+    <main>
+        <!-- Spotlight Card -->
+        <div class="spotlight-card">
+            <div class="spotlight-top">
+                <span style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #a7f3d0; font-weight: bold;">● Active Interview Spotlight</span>
+                <div class="action-btns">
+                    <button onclick="callNextApplicant()" class="btn-call">📢 Call Next Applicant</button>
+                    <button onclick="resetQueue()" class="btn-reset" title="Reset Queue">🔄</button>
+                </div>
+            </div>
+
+            <div class="spotlight-bottom">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <div id="currentTicketBadge" class="ticket-badge">#--</div>
+                    <div>
+                        <h4 id="currentName" style="font-size: 20px; font-weight: bold;">No active interview</h4>
+                        <p id="currentDetails" style="font-size: 13px; color: #a7f3d0; margin-top: 3px;">Click "Call Next Applicant" to begin interviews.</p>
+                    </div>
+                </div>
+                <div id="currentStatusBadge" class="hidden" style="background: rgba(16,185,129,0.3); color: #34d399; font-size: 12px; font-weight: bold; padding: 6px 14px; border-radius: 20px; border: 1px solid rgba(52,211,153,0.4);">
+                    Interview in Progress
+                </div>
+            </div>
+        </div>
+
+        <!-- Waiting List Box -->
+        <div class="waiting-box">
+            <div class="waiting-header">
+                <h3 style="font-size: 18px; color: white;">📋 Waiting Applicants List</h3>
+                <span style="font-size: 13px; font-weight: bold; color: #022c22; background: #fde047; padding: 6px 12px; border-radius: 10px;">
+                    Waiting Count: <span id="queueLengthText">0</span>
+                </span>
+            </div>
+
+            <div id="waitingListContainer" style="max-height: 400px; overflow-y: auto;"></div>
+        </div>
+    </main>
+
+    <footer>&copy; 2026 Isabela State University (ISU) &bull; HR Admin Dashboard.</footer>
+
+    <script>
+        let queue = JSON.parse(localStorage.getItem('isu_queue_menubar')) || [];
+        let currentApplicant = JSON.parse(localStorage.getItem('isu_current_menubar')) || null;
+        let counterId = parseInt(localStorage.getItem('isu_counter_menubar')) || 101;
+
+        const waitingListContainer = document.getElementById('waitingListContainer');
+        const queueLengthText = document.getElementById('queueLengthText');
+        
+        const currentTicketBadge = document.getElementById('currentTicketBadge');
+        const currentName = document.getElementById('currentName');
+        const currentDetails = document.getElementById('currentDetails');
+        const currentStatusBadge = document.getElementById('currentStatusBadge');
+
+        function callNextApplicant() {
+            if (queue.length === 0) {
+                alert('The waiting list is currently empty!');
+                return;
+            }
+            currentApplicant = queue.shift();
+            saveAndRender();
+        }
+
+        function removeApplicant(ticketId) {
+            queue = queue.filter(app => app.id !== ticketId);
+            saveAndRender();
+        }
+
+        function resetQueue() {
+            if (confirm('Are you sure you want to reset the queue?')) {
+                queue = [];
+                currentApplicant = null;
+                counterId = 101;
+                saveAndRender();
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('isu_queue_menubar', JSON.stringify(queue));
+            localStorage.setItem('isu_current_menubar', JSON.stringify(currentApplicant));
+            localStorage.setItem('isu_counter_menubar', counterId);
+            render();
+        }
+
+        function render() {
+            const waitingLen = queue.length;
+            queueLengthText.textContent = waitingLen;
+
+            if (currentApplicant) {
+                currentTicketBadge.textContent = currentApplicant.id;
+                currentName.textContent = currentApplicant.name;
+                currentDetails.innerHTML = `<strong>${currentApplicant.position}</strong> &bull; ${currentApplicant.degree} &bull; ${currentApplicant.phone}`;
+                currentStatusBadge.classList.remove('hidden');
+            } else {
+                currentTicketBadge.textContent = '#--';
+                currentName.textContent = 'No active interview';
+                currentDetails.textContent = 'Click "Call Next Applicant" to begin interviews.';
+                currentStatusBadge.classList.add('hidden');
+            }
+
+            if (waitingLen === 0) {
+                waitingListContainer.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: #a7f3d0;">
+                        <p style="font-size: 14px;">No applicants currently waiting in line.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            waitingListContainer.innerHTML = '';
+            queue.forEach((app, index) => {
+                const item = document.createElement('div');
+                item.className = "queue-item";
+                item.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div class="queue-num">#${index + 1} (${app.id})</div>
+                        <div>
+                            <div style="font-weight: bold; font-size: 14px; color: white;">${app.name}</div>
+                            <div style="font-size: 12px; color: #cbd5e1; margin-top: 2px;"><strong>${app.position}</strong> &bull; ${app.degree}</div>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <span style="font-size: 12px; color: #a7f3d0;">${app.time}</span>
+                        <button onclick="removeApplicant('${app.id}')" class="trash-btn" title="Remove">🗑️</button>
+                    </div>
+                `;
+                waitingListContainer.appendChild(item);
+            });
+        }
+
+        render();
+    </script>
+</body>
+</html>
