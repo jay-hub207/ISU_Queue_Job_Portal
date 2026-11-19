@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISU Job Portal - Applicant Dashboard</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #022c22; color: white; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
+
+        header { text-align: center; padding: 30px 20px 20px 20px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .home-link { position: absolute; left: 30px; top: 30px; background: rgba(255,255,255,0.1); color: #a7f3d0; padding: 8px 16px; border-radius: 10px; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s; }
+        .home-link:hover { background: rgba(255,255,255,0.2); color: white; }
+
+        .isu-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #fde047; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 12px; background: white; }
+        header h1 { font-size: 26px; font-weight: 800; color: #fde047; }
+        header p { font-size: 13px; color: #a7f3d0; }
+
+        main { max-width: 720px; margin: 20px auto; padding: 0 20px; width: 100%; flex: 1; }
+        .dash-card { background: #065f46; border-radius: 24px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); }
+
+        .status-pill { display: inline-block; background: #fde047; color: #022c22; font-size: 11px; font-weight: 800; padding: 5px 14px; border-radius: 20px; text-transform: uppercase; margin-bottom: 12px; }
+        .dash-title { font-size: 22px; font-weight: bold; margin-bottom: 6px; }
+        .dash-sub { font-size: 13px; color: #a7f3d0; margin-bottom: 25px; }
+
+        .ticket-panel { background: #022c22; border: 2px solid #fde047; border-radius: 18px; padding: 22px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .ticket-label { font-size: 11px; text-transform: uppercase; color: #a7f3d0; letter-spacing: 1px; }
+        .ticket-code { font-size: 30px; font-weight: 800; color: #fde047; margin-top: 4px; }
+        .queue-pos-box { text-align: right; }
+        .queue-pos-num { font-size: 24px; font-weight: 800; color: white; margin-top: 4px; }
+
+        .info-list { background: #047857; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 20px; margin-bottom: 25px; }
+        .info-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 13px; gap: 10px; }
+        .info-row:last-child { border-bottom: none; }
+        .info-key { color: #a7f3d0; font-weight: 600; }
+        .info-val { color: white; font-weight: bold; text-align: right; }
+
+        .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .btn { padding: 12px 18px; border-radius: 10px; font-size: 13px; font-weight: bold; border: none; cursor: pointer; text-align: center; text-decoration: none; flex: 1; transition: 0.2s; }
+        .btn-gold { background: #fde047; color: #022c22; }
+        .btn-gold:hover { background: #facc15; }
+        .btn-outline { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-outline:hover { background: rgba(255,255,255,0.2); }
+
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #6ee7b7; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="home-link">← Home</a>
+        <img src="watermarked_img_10457527337557334994.jpg" alt="ISU Logo" class="isu-logo">
+        <h1>Isabela State University</h1>
+        <p>Applicant Dashboard</p>
+    </header>
+
+    <main>
+        <div class="dash-card" id="dashboardContent">
+            <!-- Nilalagyan ng JavaScript -->
+        </div>
+    </main>
+
+    <footer>&copy; 2026 Isabela State University (ISU) &bull; Applicant Portal</footer>
+
+    <script>
+        function renderApplicantDashboard() {
+            const container = document.getElementById('dashboardContent');
+            const myTicket = JSON.parse(localStorage.getItem('isu_my_ticket'));
+            const queue = JSON.parse(localStorage.getItem('isu_queue_menubar')) || [];
+            const currentServing = JSON.parse(localStorage.getItem('isu_current_menubar'));
+
+            if (!myTicket) {
+                container.innerHTML = `
+                    <span class="status-pill">No Active Application</span>
+                    <div class="dash-title">Wala pang naisumiteng aplikasyon</div>
+                    <p class="dash-sub">Pumili muna ng bakanteng posisyon at punan ang application form upang makakuha ng queue ticket.</p>
+                    <div class="btn-row">
+                        <a href="jobs.html" class="btn btn-gold">Browse Vacant Jobs →</a>
+                    </div>
+                `;
+                return;
+            }
+
+            const indexInQueue = queue.findIndex(item => item.id === myTicket.id);
+            let statusText = 'Waiting in Queue';
+            let positionText = '—';
+
+            if (currentServing && currentServing.id === myTicket.id) {
+                statusText = 'Now Being Called / Interview';
+                positionText = 'Active';
+            } else if (indexInQueue !== -1) {
+                statusText = 'Waiting in Queue';
+                positionText = `#${indexInQueue + 1} (${indexInQueue} ahead)`;
+            } else {
+                statusText = 'Completed / Called';
+                positionText = 'Done';
+            }
+
+            container.innerHTML = `
+                <span class="status-pill">${statusText}</span>
+                <div class="dash-title">Application Submitted, ${myTicket.name}!</div>
+                <p class="dash-sub">Narito ang buod ng iyong aplikasyon at kasalukuyang katayuan sa pila.</p>
+
+                <div class="ticket-panel">
+                    <div>
+                        <div class="ticket-label">Your Queue Ticket</div>
+                        <div class="ticket-code">${myTicket.id}</div>
+                    </div>
+                    <div class="queue-pos-box">
+                        <div class="ticket-label">Queue Position</div>
+                        <div class="queue-pos-num">${positionText}</div>
+                    </div>
+                </div>
+
+                <div class="info-list">
+                    <div class="info-row">
+                        <span class="info-key">Position Applied</span>
+                        <span class="info-val">${myTicket.position}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Course / Degree</span>
+                        <span class="info-val">${myTicket.degree}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">School / University</span>
+                        <span class="info-val">${myTicket.school}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Contact Number</span>
+                        <span class="info-val">${myTicket.phone}</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">Time Registered</span>
+                        <span class="info-val">${myTicket.time}</span>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button onclick="renderApplicantDashboard()" class="btn btn-gold">Refresh Status</button>
+                    <a href="jobs.html" class="btn btn-outline">Apply Another Position</a>
+                </div>
+            `;
+        }
+
+        renderApplicantDashboard();
+    </script>
+</body>
+</html>
