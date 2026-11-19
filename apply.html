@@ -4,149 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ISU Job Application - Detail Form</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Inter', sans-serif; } </style>
-</head>
-<body class="bg-emerald-50/40 text-slate-800 min-h-screen flex flex-col justify-between">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #022c22; color: white; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
 
-    <!-- Header & Menu Bar -->
-    <header class="bg-emerald-800 text-white shadow-xl">
-        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
-                <div class="bg-white text-emerald-900 p-2.5 rounded-2xl shadow-md font-extrabold flex items-center justify-center w-12 h-12 border-2 border-emerald-300">
-                    <span class="text-lg tracking-wider">ISU</span>
-                </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight">Isabela State University</h1>
-                    <p class="text-emerald-200 text-xs">Applicant Form Portal</p>
-                </div>
-            </div>
-        </div>
-        
-        <nav class="bg-emerald-950/90 border-t border-emerald-700/40 px-6 py-3 text-xs font-semibold flex gap-8 shadow-inner">
-            <a href="index.html" class="hover:text-amber-300 transition flex items-center gap-2"><i class="fa-solid fa-house"></i> Home</a>
-            <a href="jobs.html" class="hover:text-amber-300 transition flex items-center gap-2"><i class="fa-solid fa-briefcase"></i> Vacant Jobs</a>
-            <a href="queue.html" class="hover:text-amber-300 transition flex items-center gap-2"><i class="fa-solid fa-list-check"></i> Live Queue Dashboard</a>
-        </nav>
+        header { text-align: center; padding: 30px 20px 20px 20px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .back-btn { position: absolute; left: 30px; top: 30px; background: rgba(255,255,255,0.1); color: #a7f3d0; padding: 8px 16px; border-radius: 10px; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s; }
+        .back-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+
+        .isu-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #fde047; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 12px; background: white; }
+        header h1 { font-size: 26px; font-weight: 800; color: #fde047; }
+        header p { font-size: 13px; color: #a7f3d0; }
+
+        main { max-width: 600px; margin: 20px auto; padding: 0 20px; width: 100%; flex: 1; }
+        .form-box { background: #065f46; border-radius: 24px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); }
+
+        .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        .form-header h2 { font-size: 18px; color: white; }
+        .step-indicator { font-size: 11px; color: #cbd5e1; margin-top: 3px; }
+
+        .progress-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 25px; }
+        .progress-step { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; transition: 0.3s; }
+        .progress-step.active { background: #fde047; }
+
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #a7f3d0; margin-bottom: 6px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-size: 14px; outline: none; transition: 0.2s; background: #047857; color: white; }
+        input::placeholder { color: #cbd5e1; }
+        input:focus, select:focus { border-color: #fde047; box-shadow: 0 0 0 3px rgba(253,224,71,0.2); }
+
+        .btn-row { display: flex; gap: 12px; margin-top: 25px; }
+        .btn { padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: bold; border: none; cursor: pointer; text-align: center; text-decoration: none; flex: 1; transition: 0.2s; }
+        .btn-primary { background: #fde047; color: #022c22; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-primary:hover { background: #facc15; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .hidden { display: none; }
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #6ee7b7; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="jobs.html" class="back-btn">← Back</a>
+        <img src="watermarked_img_10457527337557334994.jpg" alt="ISU Logo" class="isu-logo">
+        <h1>Isabela State University</h1>
+        <p>Applicant Form Portal</p>
     </header>
 
-    <!-- Multi-Step Form Container -->
-    <main class="max-w-2xl mx-auto px-4 py-12 w-full">
-        <div class="bg-white rounded-3xl shadow-2xl border border-emerald-100 p-8 sm:p-10">
-            <div class="flex items-center justify-between mb-8 pb-4 border-b border-emerald-50">
+    <main>
+        <div class="form-box">
+            <div class="form-header">
                 <div>
-                    <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2.5">
-                        <i class="fa-solid fa-id-card text-emerald-700"></i> Applicant Detail Form
-                    </h2>
-                    <p class="text-xs text-slate-500 mt-1" id="stepIndicator">Step 1 of 3: Personal Information</p>
+                    <h2>Applicant Detail Form</h2>
+                    <div class="step-indicator" id="stepIndicator">Step 1 of 3: Personal Information</div>
                 </div>
-                <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-3 py-1 rounded-full shadow-sm border border-emerald-200">ISU Portal</span>
+                <span style="background: #10b981; color: white; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px;">ISU Portal</span>
             </div>
 
-            <!-- Progress Bar -->
-            <div class="grid grid-cols-3 gap-2.5 mb-8">
-                <div id="stepBar1" class="h-2.5 rounded-full bg-emerald-700 transition-all duration-300 shadow-sm"></div>
-                <div id="stepBar2" class="h-2.5 rounded-full bg-slate-200 transition-all duration-300"></div>
-                <div id="stepBar3" class="h-2.5 rounded-full bg-slate-200 transition-all duration-300"></div>
+            <div class="progress-bar">
+                <div class="progress-step active" id="bar1"></div>
+                <div class="progress-step" id="bar2"></div>
+                <div class="progress-step" id="bar3"></div>
             </div>
 
-            <form id="registrationForm" class="space-y-5">
-                
-                <!-- STEP 1: Personal Information -->
-                <div id="step1" class="space-y-4">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-800 border-b border-emerald-100 pb-1.5">1. Personal Information</h3>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Full Name (First, Middle, Last)</label>
-                        <input type="text" id="applicantName" required placeholder="e.g. Juan A. Dela Cruz" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Email Address</label>
-                        <input type="email" id="applicantEmail" required placeholder="juan.delacruz@isu.edu.ph" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Phone Number</label>
-                        <input type="tel" id="applicantPhone" required placeholder="+63 912 345 6789" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Current Address / Municipality</label>
-                        <input type="text" id="applicantAddress" required placeholder="Roxas, Isabela" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <button type="button" onclick="nextStep(2)" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-700/20 transition text-sm flex items-center justify-center gap-2 mt-6">
-                        Next: Educational Background <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </button>
+            <form id="registrationForm">
+                <!-- STEP 1 -->
+                <div id="step1">
+                    <div class="form-group"><label>Full Name</label><input type="text" id="applicantName" required placeholder="Juan A. Dela Cruz"></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="applicantEmail" required placeholder="juan@isu.edu.ph"></div>
+                    <div class="form-group"><label>Phone Number</label><input type="tel" id="applicantPhone" required placeholder="+63 912 345 6789"></div>
+                    <div class="form-group"><label>Address / Municipality</label><input type="text" id="applicantAddress" required placeholder="Roxas, Isabela"></div>
+                    <button type="button" onclick="nextStep(2)" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Next: Educational Background →</button>
                 </div>
 
-                <!-- STEP 2: Educational Background -->
-                <div id="step2" class="space-y-4 hidden">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-800 border-b border-emerald-100 pb-1.5">2. Educational Background</h3>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Degree / Course Completed</label>
-                        <input type="text" id="applicantDegree" required placeholder="Bachelor of Science in Information Technology" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">University / School Attended</label>
-                        <input type="text" id="applicantSchool" required placeholder="Isabela State University" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Year Graduated</label>
-                        <input type="number" id="applicantGradYear" required placeholder="2025" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="nextStep(1)" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl shadow-sm transition text-sm">
-                            <i class="fa-solid fa-arrow-left text-xs mr-1"></i> Back
-                        </button>
-                        <button type="button" onclick="nextStep(3)" class="w-1/2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-700/20 transition text-sm">
-                            Next: Position <i class="fa-solid fa-arrow-right text-xs ml-1"></i>
-                        </button>
+                <!-- STEP 2 -->
+                <div id="step2" class="hidden">
+                    <div class="form-group"><label>Degree / Course</label><input type="text" id="applicantDegree" required placeholder="BS Information Technology"></div>
+                    <div class="form-group"><label>University / School</label><input type="text" id="applicantSchool" required placeholder="Isabela State University"></div>
+                    <div class="form-group"><label>Year Graduated</label><input type="number" id="applicantGradYear" required placeholder="2025"></div>
+                    <div class="btn-row">
+                        <button type="button" onclick="nextStep(1)" class="btn btn-secondary">Back</button>
+                        <button type="button" onclick="nextStep(3)" class="btn btn-primary">Next: Position →</button>
                     </div>
                 </div>
 
-                <!-- STEP 3: Position & Submission -->
-                <div id="step3" class="space-y-4 hidden">
-                    <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-800 border-b border-emerald-100 pb-1.5">3. Position & Final Submit</h3>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Applying For Position at ISU</label>
-                        <select id="jobPosition" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
+                <!-- STEP 3 -->
+                <div id="step3" class="hidden">
+                    <div class="form-group">
+                        <label>Applying For Position</label>
+                        <select id="jobPosition">
                             <option value="Instructor I (IT / CS)">Instructor I (IT / CS)</option>
                             <option value="University Librarian I">University Librarian I</option>
                             <option value="Instructor I (Mathematics)">Instructor I (Mathematics)</option>
                             <option value="Project / IT Assistant">Project / IT Assistant</option>
-                            <option value="Administrative Staff">Administrative Staff</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Years of Relevant Experience</label>
-                        <input type="text" id="applicantExperience" placeholder="e.g. 2 Years Teaching / IT Support" class="w-full px-4 py-3 text-sm bg-white border border-slate-200 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent transition">
-                    </div>
-                    <div class="bg-emerald-50 border border-emerald-200 p-3.5 rounded-xl text-xs text-emerald-900 shadow-sm flex items-start gap-2.5">
-                        <i class="fa-solid fa-circle-info text-emerald-700 mt-0.5 text-sm"></i>
-                        <span>By submitting, your records will be registered securely to the official ISU queue and HR review system.</span>
-                    </div>
-                    <div class="flex gap-3 mt-6">
-                        <button type="button" onclick="nextStep(2)" class="w-1/3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3.5 rounded-xl shadow-sm transition text-sm">
-                            Back
-                        </button>
-                        <button type="submit" class="w-2/3 bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-700/20 transition text-sm flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-paper-plane"></i> Join Queue & Get Ticket
-                        </button>
+                    <div class="form-group"><label>Relevant Experience</label><input type="text" id="applicantExperience" placeholder="e.g. 2 Years Teaching / IT Support"></div>
+                    <div class="btn-row">
+                        <button type="button" onclick="nextStep(2)" class="btn btn-secondary">Back</button>
+                        <button type="submit" class="btn btn-primary">Join Queue & Get Ticket</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t border-emerald-100 py-5 text-center text-xs text-slate-500 shadow-inner">
-        &copy; 2026 Isabela State University (ISU) &bull; Application Portal.
-    </footer>
+    <footer>&copy; 2026 Isabela State University (ISU)</footer>
 
-    <!-- Script para sa Form & URL parameter handling -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
@@ -167,28 +133,24 @@
             document.getElementById('step2').classList.add('hidden');
             document.getElementById('step3').classList.add('hidden');
 
-            const bar1 = document.getElementById('stepBar1');
-            const bar2 = document.getElementById('stepBar2');
-            const bar3 = document.getElementById('stepBar3');
-
-            bar1.className = "h-2.5 rounded-full bg-slate-200 transition-all duration-300";
-            bar2.className = "h-2.5 rounded-full bg-slate-200 transition-all duration-300";
-            bar3.className = "h-2.5 rounded-full bg-slate-200 transition-all duration-300";
+            document.getElementById('bar1').classList.remove('active');
+            document.getElementById('bar2').classList.remove('active');
+            document.getElementById('bar3').classList.remove('active');
 
             if (stepNumber === 1) {
                 document.getElementById('step1').classList.remove('hidden');
-                bar1.className = "h-2.5 rounded-full bg-emerald-700 transition-all duration-300 shadow-sm";
+                document.getElementById('bar1').classList.add('active');
                 document.getElementById('stepIndicator').textContent = "Step 1 of 3: Personal Information";
             } else if (stepNumber === 2) {
                 document.getElementById('step2').classList.remove('hidden');
-                bar1.className = "h-2.5 rounded-full bg-emerald-700 transition-all duration-300";
-                bar2.className = "h-2.5 rounded-full bg-emerald-700 transition-all duration-300 shadow-sm";
+                document.getElementById('bar1').classList.add('active');
+                document.getElementById('bar2').classList.add('active');
                 document.getElementById('stepIndicator').textContent = "Step 2 of 3: Educational Background";
             } else if (stepNumber === 3) {
                 document.getElementById('step3').classList.remove('hidden');
-                bar1.className = "h-2.5 rounded-full bg-emerald-700 transition-all duration-300";
-                bar2.className = "h-2.5 rounded-full bg-emerald-700 transition-all duration-300";
-                bar3.className = "h-2.5 rounded-full bg-emerald-700 transition-all duration-300 shadow-sm";
+                document.getElementById('bar1').classList.add('active');
+                document.getElementById('bar2').classList.add('active');
+                document.getElementById('bar3').classList.add('active');
                 document.getElementById('stepIndicator').textContent = "Step 3 of 3: Position & Submission";
             }
         }
@@ -208,15 +170,16 @@
                 degree: document.getElementById('applicantDegree').value.trim(),
                 school: document.getElementById('applicantSchool').value.trim(),
                 position: document.getElementById('jobPosition').value,
+                experience: document.getElementById('applicantExperience').value.trim(),
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             };
 
             queue.push(newApplicant);
             localStorage.setItem('isu_queue_menubar', JSON.stringify(queue));
             localStorage.setItem('isu_counter_menubar', counterId);
+            localStorage.setItem('isu_my_ticket', JSON.stringify(newApplicant));
 
-            alert('Successfully registered! Your Ticket ID is ' + newApplicant.id);
-            window.location.href = 'queue.html';
+            window.location.href = 'applicant-dashboard.html';
         });
     </script>
 </body>
