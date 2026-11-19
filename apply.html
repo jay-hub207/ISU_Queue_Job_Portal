@@ -1,4 +1,143 @@
-<script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISU Job Application - Detail Form</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #022c22; color: white; display: flex; flex-direction: column; min-height: 100vh; justify-content: space-between; }
+
+        header { text-align: center; padding: 30px 20px 20px 20px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .back-btn { position: absolute; left: 30px; top: 30px; background: rgba(255,255,255,0.1); color: #a7f3d0; padding: 8px 16px; border-radius: 10px; text-decoration: none; font-size: 13px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s; }
+        .back-btn:hover { background: rgba(255,255,255,0.2); color: white; }
+
+        .isu-logo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #fde047; box-shadow: 0 4px 10px rgba(0,0,0,0.3); margin-bottom: 12px; background: white; }
+        header h1 { font-size: 26px; font-weight: 800; color: #fde047; }
+        header p { font-size: 13px; color: #a7f3d0; }
+
+        main { max-width: 600px; margin: 20px auto; padding: 0 20px; width: 100%; flex: 1; }
+        .form-box { background: #065f46; border-radius: 24px; padding: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 2px solid rgba(255,255,255,0.1); }
+
+        .form-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        .form-header h2 { font-size: 18px; color: white; }
+        .step-indicator { font-size: 11px; color: #cbd5e1; margin-top: 3px; }
+
+        .progress-bar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 25px; }
+        .progress-step { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; transition: 0.3s; }
+        .progress-step.active { background: #fde047; }
+
+        .form-group { margin-bottom: 16px; }
+        label { display: block; font-size: 11px; font-weight: bold; text-transform: uppercase; color: #a7f3d0; margin-bottom: 6px; }
+        input, select { width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 10px; font-size: 14px; outline: none; transition: 0.2s; background: #047857; color: white; }
+        input::placeholder { color: #cbd5e1; }
+        input:focus, select:focus { border-color: #fde047; box-shadow: 0 0 0 3px rgba(253,224,71,0.2); }
+
+        .btn-row { display: flex; gap: 12px; margin-top: 25px; }
+        .btn { padding: 12px 20px; border-radius: 10px; font-size: 13px; font-weight: bold; border: none; cursor: pointer; text-align: center; text-decoration: none; flex: 1; transition: 0.2s; }
+        .btn-primary { background: #fde047; color: #022c22; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .btn-primary:hover { background: #facc15; }
+        .btn-secondary { background: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+        .hidden { display: none; }
+        footer { text-align: center; padding: 20px; font-size: 12px; color: #6ee7b7; border-top: 1px solid rgba(255,255,255,0.05); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="jobs.html" class="back-btn">← Back</a>
+        <img src="watermarked_img_10457527337557334994.jpg" alt="ISU Logo" class="isu-logo">
+        <h1>Isabela State University</h1>
+        <p>Applicant Form Portal</p>
+    </header>
+
+    <main>
+        <div class="form-box">
+            <div class="form-header">
+                <div>
+                    <h2>Applicant Detail Form</h2>
+                    <div class="step-indicator" id="stepIndicator">Step 1 of 3: Personal Information</div>
+                </div>
+                <span style="background: #10b981; color: white; font-size: 11px; font-weight: bold; padding: 4px 10px; border-radius: 20px;">ISU Portal</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-step active" id="bar1"></div>
+                <div class="progress-step" id="bar2"></div>
+                <div class="progress-step" id="bar3"></div>
+            </div>
+
+            <form id="registrationForm">
+                <!-- STEP 1 -->
+                <div id="step1">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="applicantName" required placeholder="Juan A. Dela Cruz">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="applicantEmail" required placeholder="juan@isu.edu.ph">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="applicantPhone" required placeholder="+63 912 345 6789">
+                    </div>
+                    <div class="form-group">
+                        <label>Address / Municipality</label>
+                        <input type="text" id="applicantAddress" required placeholder="Roxas, Isabela">
+                    </div>
+                    <button type="button" onclick="nextStep(2)" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Next: Educational Background →</button>
+                </div>
+
+                <!-- STEP 2 -->
+                <div id="step2" class="hidden">
+                    <div class="form-group">
+                        <label>Degree / Course</label>
+                        <input type="text" id="applicantDegree" required placeholder="BS Information Technology">
+                    </div>
+                    <div class="form-group">
+                        <label>University / School</label>
+                        <input type="text" id="applicantSchool" required placeholder="Isabela State University">
+                    </div>
+                    <div class="form-group">
+                        <label>Year Graduated</label>
+                        <input type="number" id="applicantGradYear" required placeholder="2025">
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" onclick="nextStep(1)" class="btn btn-secondary">Back</button>
+                        <button type="button" onclick="nextStep(3)" class="btn btn-primary">Next: Position →</button>
+                    </div>
+                </div>
+
+                <!-- STEP 3 -->
+                <div id="step3" class="hidden">
+                    <div class="form-group">
+                        <label>Applying For Position</label>
+                        <select id="jobPosition">
+                            <option value="Instructor I (IT / CS)">Instructor I (IT / CS)</option>
+                            <option value="University Librarian I">University Librarian I</option>
+                            <option value="Instructor I (Mathematics)">Instructor I (Mathematics)</option>
+                            <option value="Project / IT Assistant">Project / IT Assistant</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Relevant Experience</label>
+                        <input type="text" id="applicantExperience" placeholder="e.g. 2 Years Teaching / IT Support">
+                    </div>
+                    <div class="btn-row">
+                        <button type="button" onclick="nextStep(2)" class="btn btn-secondary">Back</button>
+                        <button type="submit" class="btn btn-primary">Join Queue & Get Ticket</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer>&copy; 2026 Isabela State University (ISU)</footer>
+
+    <script>
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const selectedJob = urlParams.get('position');
@@ -89,6 +228,9 @@
             localStorage.setItem('isu_counter_menubar', counterId);
             localStorage.setItem('isu_my_ticket', JSON.stringify(newApplicant));
 
-            window.location.replace('applicant-dashboard.html');
+            alert('Successfully registered! Your Ticket ID is ' + newApplicant.id);
+            window.location.href = 'applicant-dashboard.html';
         });
     </script>
+</body>
+</html>
